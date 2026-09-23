@@ -5,16 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Die Seite gibt es nur in hell, genau wie die Startseite. -->
 <meta name="color-scheme" content="light">
-<title>Häufige Fragen — Hautmaß</title>
-<meta name="description" content="Antworten auf die häufigsten Fragen zu Hautmaß: Hautanalyse, Wirkstoffe, Anwendung, Preis und Abo.">
+<title>Anfrage angekommen — Hautmaß</title>
+<meta name="description" content="Deine Terminanfrage bei Hautmaß ist angekommen.">
 
 <!-- Schrift: Jost von Google Fonts. Fällt die Verbindung aus, greift die Ersatzliste in --schrift. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;600&display=swap" rel="stylesheet">
 
-<!-- Das Aussehen ist dasselbe wie auf der Startseite. Beide Dateien tragen
-     ihr Aussehen selbst, damit keine von der anderen abhängt. -->
+<!-- Das Aussehen ist dasselbe wie auf der Startseite. Jede Datei trägt ihr
+     Aussehen selbst, damit keine von der anderen abhängt. -->
 <style>
 /* ============================================================
    Gestaltungsregeln aus Woche 7:
@@ -279,35 +279,57 @@ h3{font-size:19px; font-weight:600; margin:0 0 8px;}
 </style>
 
 <style>
-/* ---------- Nur auf dieser Seite: die Fragenliste ---------- */
+/* ---------- Nur auf dieser Seite: das Formular ---------- */
 .seitenkopf{padding:64px 0 32px;}
 .seitenkopf h1{font-size:38px; margin-bottom:16px;}
-.fragen-liste{border-top:1px solid var(--linie); margin-top:32px;}
-.frage{border-bottom:1px solid var(--linie);}
-.frage summary{
-  cursor:pointer; font-weight:600; font-size:19px; line-height:1.4;
-  padding:16px 0; list-style:none;
-  display:flex; justify-content:space-between; align-items:flex-start; gap:24px;
+.formular{max-width:560px;}
+.feld{margin-bottom:24px;}
+.feld label{display:block; font-weight:600; font-size:16px; margin-bottom:8px;}
+.feld .dazu{display:block; font-weight:400; font-size:15px; color:var(--nebentext);}
+.feld input, .feld select, .feld textarea{
+  width:100%; font-family:var(--schrift); font-size:16px; color:var(--text);
+  background:#fff; border:1px solid var(--nebentext); border-radius:4px;
+  padding:12px 16px; min-height:48px;
 }
-.frage summary::-webkit-details-marker{display:none;}
-.frage summary::after{content:"+"; color:var(--akzent-dunkel); font-weight:600; font-size:22px; line-height:1.2;}
-.frage[open] summary::after{content:"\2013";}
-.frage summary:focus-visible{outline:2px solid var(--akzent-dunkel); outline-offset:4px;}
-.antwort{max-width:var(--spalte); padding:0 0 24px;}
-.antwort p{margin:0 0 16px; font-size:17px;}
-.antwort p:last-child{margin-bottom:0;}
+.feld textarea{min-height:96px; line-height:1.5; resize:vertical;}
+.feld input:focus-visible, .feld select:focus-visible, .feld textarea:focus-visible{
+  outline:2px solid var(--akzent-dunkel); outline-offset:2px;
+}
+.feld-zeile{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+.pflicht{color:var(--akzent-dunkel); font-weight:600;}
+
+/* Falle für automatische Programme: für Menschen unsichtbar, für Maschinen
+   ein ganz normales Feld. Kommt es ausgefüllt an, wirft n8n die Anfrage weg. */
+.falle{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;}
+
+.kurshinweis{
+  background:var(--flaeche); border-left:3px solid var(--akzent-dunkel);
+  padding:16px 24px; margin:32px 0; font-size:16px; max-width:560px;
+}
+.kurshinweis p{margin:0;}
+
+/* Absendeknopf: dunkler Akzent mit weißer Schrift, weil der Grund hier hell ist */
+.knopf-senden{
+  display:inline-block; border:none; cursor:pointer;
+  background:var(--akzent-dunkel); color:#fff;
+  font-family:var(--schrift); font-size:18px; font-weight:600;
+  padding:16px 32px; border-radius:4px;
+}
+.knopf-senden:hover{background:#0A6B62;}
+.knopf-senden:focus-visible{outline:2px solid var(--akzent-dunkel); outline-offset:4px;}
+
 .zurueck{
   display:inline-block; margin-top:40px; color:var(--akzent-dunkel);
   font-weight:600; text-underline-offset:4px;
 }
 .zurueck::before{content:"\2190\00a0";}
+
 @media (max-width:720px){
   .seitenkopf{padding:32px 0 24px;}
   .seitenkopf h1{font-size:28px;}
-  .frage summary{font-size:17px;}
+  .feld-zeile{grid-template-columns:1fr; gap:0;}
 }
 </style>
-
 </head>
 
 <body>
@@ -317,7 +339,6 @@ h3{font-size:19px; font-weight:600; margin:0 0 8px;}
 <!-- ======== Kopfzeile ======== -->
 <div class="kopf-leiste">
 <header class="kopf">
-  <!-- Auf der Unterseite führt das Logo zurück zur Startseite. -->
   <a class="logo-link" href="index.html" title="Zur Startseite" aria-label="Zur Startseite">
     <img src="logo.png" alt="Hautmaß" width="600" height="196">
   </a>
@@ -325,103 +346,28 @@ h3{font-size:19px; font-weight:600; margin:0 0 8px;}
     <a href="index.html">Startseite</a>
     <a href="index.html#flasche">Wirkstoffe</a>
     <a href="index.html#filialen">Filialen</a>
-    <a class="knopf-kopf" href="kontakt.html">Termin buchen</a>
+    <a href="fragen.html">Häufige Fragen</a>
   </nav>
 </header>
 </div>
 
-<!-- ======== Überschrift und Einleitung ======== -->
+<!-- ======== Bestätigung ======== -->
 <section class="seitenkopf">
   <div class="bereich">
-    <h1>Häufige Fragen</h1>
-    <p class="text" style="margin-bottom:0;">Wie deine Hautanalyse abläuft, was in deinem Serum
-       steckt und wie das Abo funktioniert — hier stehen die Antworten.</p>
+    <h1>Deine Anfrage ist angekommen.</h1>
   </div>
 </section>
 
-<!-- ======== Die Fragen ======== -->
 <section class="abschnitt" style="padding-top:0;">
   <div class="bereich">
-    <div class="fragen-liste">
-      <details class="frage">
-        <summary>Was ist Hautmaß?</summary>
-      <div class="antwort">
-        <p>Hautmaß ist ein Gesichtsserum, das für dich gemischt wird, nachdem deine Haut gemessen wurde.</p>
-        <p>In einer unserer Filialen messen wir deine Haut, wählen daraus die passenden Wirkstoffe und ihre Konzentrationen und mischen dein Serum in unserem eigenen Labor. Danach kommt es regelmäßig zu dir nach Hause.</p>
-      </div>
-      </details>
+    <p class="text">Wir melden uns innerhalb von zwei Werktagen per E-Mail mit einem
+       Terminvorschlag für die Filiale, die du gewählt hast.</p>
+    <p class="text">Eine Bestätigungsmail schicken wir nicht — diese Seite ist deine Bestätigung.
+       Merk dir am besten, welche Filiale und welchen Wunschtermin du angegeben hast.</p>
 
-      <details class="frage">
-        <summary>Wie läuft die Hautanalyse ab?</summary>
-      <div class="antwort">
-        <p>Wir messen Feuchtigkeit und Talgproduktion an mehreren Stellen in deinem Gesicht. Dazu sprechen wir mit dir über die Empfindlichkeit deiner Haut.</p>
-        <p>Der Termin dauert rund 15 Minuten, ist kostenlos und einmalig. Deine Werte besprechen wir direkt vor Ort mit dir — aus ihnen entsteht anschließend die Wirkstoffauswahl.</p>
-      </div>
-      </details>
-
-      <details class="frage">
-        <summary>Muss ich ein Foto von meinem Gesicht hochladen?</summary>
-      <div class="antwort">
-        <p>Nein. Für die Hautanalyse brauchst du kein Foto.</p>
-        <p>Gemessen wird persönlich in einer unserer Filialen. Unser Fachpersonal nimmt deine Werte vor Ort auf und fragt dich nach der Empfindlichkeit deiner Haut.</p>
-      </div>
-      </details>
-
-      <details class="frage">
-        <summary>Woher weiß ich, welche Wirkstoffe in meinem Serum sind?</summary>
-      <div class="antwort">
-        <p>Auf deiner Flasche steht jeder ausgewählte Wirkstoff mit seiner Konzentration, dazu das Mischdatum.</p>
-        <p>Die vollständige Inhaltsstoffliste findest du auf dem Rücketikett. Dort stehen auch die Bestandteile der Serumgrundlage.</p>
-      </div>
-      </details>
-
-      <details class="frage">
-        <summary>Wie wende ich mein Serum an?</summary>
-      <div class="antwort">
-        <p>Abends auf die gereinigte Haut, drei bis vier Tropfen, danach deine gewohnte Creme. Morgens geht es genauso.</p>
-        <p>Auf der Flasche steht das Mischdatum. Weil wir frisch für dich mischen, solltest du dein Serum innerhalb von sechs Monaten aufbrauchen.</p>
-      </div>
-      </details>
-
-      <details class="frage">
-        <summary>Wann merke ich einen Unterschied?</summary>
-      <div class="antwort">
-        <p>Das lässt sich nicht für jede Haut gleich beantworten, und wir versprechen kein Ergebnis zu einem bestimmten Zeitpunkt.</p>
-        <p>Die meisten Wirkstoffe brauchen Zeit, weil sich die Haut langsam erneuert. Rechne eher in Wochen als in Tagen. Ein Sofort-Effekt ist ein Gesichtsserum nicht.</p>
-      </div>
-      </details>
-
-      <details class="frage">
-        <summary>Was kostet Hautmaß?</summary>
-      <div class="antwort">
-        <p>39 Euro für eine 30-ml-Flasche im Abo.</p>
-        <p>Die Hautanalyse kostet nichts, die jährliche Nachmessung ebenfalls nicht. Beides ist im Preis enthalten.</p>
-      </div>
-      </details>
-
-      <details class="frage">
-        <summary>Kann ich mein Abo pausieren oder kündigen?</summary>
-      <div class="antwort">
-        <p>Ja, beides im Kundenkonto. Dein Abo ist monatlich kündbar, die Lieferung lässt sich für ein bis drei Monate pausieren.</p>
-        <p>Dafür musst du weder anrufen noch eine E-Mail schreiben und auch keinen Grund angeben.</p>
-      </div>
-      </details>
-
-      <details class="frage">
-        <summary>Was passiert, wenn sich meine Haut verändert?</summary>
-      <div class="antwort">
-        <p>Einmal im Jahr messen wir kostenlos nach.</p>
-        <p>Wir vergleichen deine aktuellen Werte mit den bisherigen. Haben sie sich verschoben, passen wir die Wirkstoffauswahl und ihre Konzentrationen an.</p>
-      </div>
-      </details>
-
-      <details class="frage">
-        <summary>Ist Hautmaß für Menschen mit Hauterkrankungen geeignet?</summary>
-      <div class="antwort">
-        <p>Hautmaß ist kosmetische Pflege und keine medizinische Behandlung.</p>
-        <p>Unsere Analyse misst kosmetische Hautmerkmale. Wir stellen keine Diagnosen und behandeln keine Hauterkrankungen. Bei behandlungsbedürftigen Hautproblemen, etwa Akne oder Neurodermitis, ist eine dermatologische Untersuchung erforderlich.</p>
-      </div>
-      </details>
+    <div class="kurshinweis">
+      <p><strong>Beispielseite aus dem Kurs.</strong> Es wurde kein echter Termin gebucht,
+         und es meldet sich niemand.</p>
     </div>
 
     <a class="zurueck" href="index.html">Zurück zur Startseite</a>
