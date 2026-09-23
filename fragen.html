@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Die Seite gibt es nur in hell, genau wie die Startseite. -->
+<meta name="color-scheme" content="light">
+<title>Häufige Fragen — Hautmaß</title>
+<meta name="description" content="Antworten auf die häufigsten Fragen zu Hautmaß: Hautanalyse, Wirkstoffe, Anwendung, Preis und Abo.">
+
+<!-- Schrift: Jost von Google Fonts. Fällt die Verbindung aus, greift die Ersatzliste in --schrift. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;600&display=swap" rel="stylesheet">
+
+<!-- Das Aussehen ist dasselbe wie auf der Startseite. Beide Dateien tragen
+     ihr Aussehen selbst, damit keine von der anderen abhängt. -->
+<style>
+/* ============================================================
+   Gestaltungsregeln aus Woche 7:
+   Fließtext 18 Pixel, Zeilenhöhe 1,6, Textspalte rund 70 Zeichen,
+   Absatzabstand mehr als doppelte Schriftgröße,
+   alle Abstände Vielfache von 8 (8, 16, 24, 32, 40, 64).
+   ============================================================ */
+:root{
+  color-scheme: light;        /* keine automatische Verdunklung */
+  --tiefblau:#12283F;
+  --tiefblau-dunkel:#0A1A2B;   /* Fußzeile, damit sie sich absetzt */
+  --text:#16202B;
+  --flaeche:#EDF1F4;
+  --nebentext:#5A6773;
+  --linie:#D9DFE5;
+  --akzent-dunkel:#0B7D72;   /* nur auf hellem Grund */
+  --akzent-hell:#35C4B0;     /* nur auf dunklem Grund, und nur für den Knopf */
+  --schrift:'Jost', 'Segoe UI', system-ui, Arial, sans-serif;
+  --breite:1000px;           /* Inhaltsbereich */
+  --spalte:600px;            /* rund 70 Zeichen bei 18 Pixel */
+}
+
+*{box-sizing:border-box;}
+
+/* Sprünge innerhalb der Seite laufen weich, damit man sieht, wohin man springt.
+   Wer im Betriebssystem weniger Bewegung eingestellt hat, bekommt den harten Sprung. */
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+
+body{
+  margin:0;
+  font-family:var(--schrift);
+  font-size:18px;
+  line-height:1.6;
+  color:var(--text);
+  background:#fff;
+}
+img{display:block; max-width:100%;}
+
+/* Absatzabstand 40 Pixel: mehr als das Doppelte der Schriftgröße */
+p{margin:0 0 40px;}
+p:last-child{margin-bottom:0;}
+
+h1,h2,h3{line-height:1.2; text-wrap:balance;}
+h1{font-size:44px; font-weight:600; margin:0 0 24px;}
+h2{font-size:26px; font-weight:600; margin:0 0 16px;}  /* dichter am eigenen Text als am Abschnitt darüber */
+h3{font-size:19px; font-weight:600; margin:0 0 8px;}
+.klein{font-size:15px; color:var(--nebentext);}
+
+.bereich{max-width:var(--breite); margin:0 auto; padding:0 24px;}
+.text{max-width:var(--spalte);}
+.abschnitt{padding:64px 0;}
+.abschnitt-hell{background:var(--flaeche);}
+.abschnitt-dunkel{background:var(--tiefblau); color:#fff;}
+
+/* ---------- Kopfzeile ---------- */
+/* Ab 721 Pixel bleibt sie beim Scrollen oben stehen. Auf dem Handy nicht:
+   dort ist sie dreizeilig und würde zu viel vom Bildschirm wegnehmen. */
+.kopf-leiste{background:#fff;}
+@media (min-width:721px){
+  .kopf-leiste{
+    position:sticky; top:0; z-index:10;
+    border-bottom:1px solid var(--linie);
+  }
+}
+.kopf{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:24px; flex-wrap:wrap;
+  max-width:var(--breite); margin:0 auto; padding:16px 24px;
+}
+.logo-link{display:inline-block; border-radius:4px;}
+.logo-link:focus-visible{outline:2px solid var(--akzent-dunkel); outline-offset:4px;}
+.kopf img{width:208px; height:auto;}
+.kopf nav{display:flex; align-items:center; gap:24px; flex-wrap:wrap;}
+.kopf nav a{color:var(--text); text-decoration:none; font-size:16px;}
+.kopf nav a:hover{color:var(--akzent-dunkel);}
+
+/* Hauptknopf oben rechts: 48 Pixel hoch, mit einem Verb beschriftet,
+   weiße Schrift auf dunklem Akzent (5:1 Kontrast).
+   Der Selektor nennt .kopf nav mit, sonst gewinnt die Regel für die
+   normalen Navigationslinks und der Knopf bekommt dunkle Schrift. */
+.kopf nav a.knopf-kopf{
+  background:var(--akzent-dunkel); color:#fff;
+  text-decoration:none; font-weight:600; font-size:16px;
+  padding:12px 24px; border-radius:4px;
+}
+.kopf nav a.knopf-kopf:hover{background:#0A6B62; color:#fff;}
+
+/* ---------- Hero: Claim, Kernbotschaft, eine Zeile Fakten. Mehr nicht. ---------- */
+.hero{background:var(--tiefblau); color:#fff; padding:64px 0;}
+.hero-kern{font-size:22px; line-height:1.5; color:#fff; margin:0 0 16px; max-width:var(--spalte);}
+.hero-fakten{font-size:18px; color:#D8E0E8; margin:0; max-width:var(--spalte);}
+.hero-fakten strong{color:#fff; font-weight:600;}
+
+/* ---------- Hauptknopf auf dunklem Grund ---------- */
+.knopf{
+  display:inline-block;
+  background:var(--akzent-hell); color:var(--tiefblau);
+  text-decoration:none; font-weight:600;
+  padding:16px 32px; border-radius:4px;
+}
+.knopf:hover{background:#4FD6C3;}
+
+/* ---------- Bild ---------- */
+.bildband{padding:0 24px;}
+.bildband img{width:100%; height:auto; max-width:952px; margin:0 auto;}
+.bildunter{font-size:16px; margin:16px 0 0; max-width:var(--spalte);}
+.bildquelle{font-size:15px; color:var(--nebentext); margin:8px 0 0; max-width:var(--spalte);}
+
+/* ---------- Skalenstriche, greifen das Logo auf ---------- */
+.striche{display:flex; align-items:flex-end; gap:4px; height:24px; margin-bottom:16px;}
+.striche span{width:2px; background:var(--akzent-dunkel);}
+.striche span:nth-child(1){height:8px;}
+.striche span:nth-child(2){height:16px;}
+.striche span:nth-child(3){height:24px;}
+.striche span:nth-child(4){height:12px;}
+
+/* ---------- Drei Schritte ---------- */
+.schritte{display:grid; grid-template-columns:repeat(3,1fr); gap:32px;}
+.schritte p{margin-bottom:0;}
+
+/* ---------- Etikett-Karte ---------- */
+.etikett-block{
+  display:grid; grid-template-columns:408px 1fr; gap:40px;
+  align-items:start; margin-top:32px;
+}
+.etikett{
+  background:#fff; border:1px solid var(--linie); border-radius:8px;
+  padding:24px;
+}
+.etikett-logo{width:136px; height:auto; margin-bottom:8px;}
+.etikett-claim{font-size:13px; color:var(--nebentext); margin:0 0 16px;}
+.etikett-produkt{
+  font-size:15px; color:var(--text); margin:0 0 16px;
+  padding-bottom:16px; border-bottom:1px solid var(--linie);
+}
+.etikett-analyse{
+  font-size:14px; color:var(--nebentext); line-height:1.5;
+  border-bottom:1px solid var(--linie); padding-bottom:16px;
+}
+.etikett-analyse strong{display:block; color:var(--text); font-size:15px;}
+.etikett-titel{font-size:15px; margin:16px 0 8px; color:var(--text);}
+.etikett-zeile{
+  display:flex; justify-content:space-between; gap:16px;
+  padding:8px 0; border-bottom:1px solid var(--linie); font-size:16px;
+}
+.etikett-zeile .wert{font-weight:600; white-space:nowrap; font-variant-numeric:tabular-nums;}
+
+/* Aufklappbare Wirkstoffbeschreibungen — natives HTML, kein JavaScript */
+.details{border-top:1px solid var(--linie); padding-top:16px; margin-bottom:40px;}
+.details summary{cursor:pointer; font-weight:600; font-size:16px;}
+.details summary:focus-visible{outline:2px solid var(--akzent-dunkel); outline-offset:4px;}
+.details dl{margin:16px 0 0;}
+.details dt{font-weight:600; font-size:16px; margin-top:16px;}
+.details dd{margin:0; font-size:16px; color:var(--nebentext);}
+.etikett-grundlage{
+  font-size:14px; color:var(--nebentext); line-height:1.5; margin-top:16px;
+}
+.etikett-datum{font-size:14px; color:var(--nebentext); margin-top:8px;}
+
+.grenze{border-left:3px solid var(--akzent-dunkel); padding-left:24px; max-width:var(--spalte);}
+.grenze p{margin-bottom:24px;}
+.grenze p:last-child{margin-bottom:0;}
+
+/* ---------- Filialen ---------- */
+.filialen-titel{margin:40px 0 16px;}
+.filialen{display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:16px 16px;}
+.filiale{border-top:2px solid var(--linie); padding-top:8px;}
+.filiale strong{display:block; font-size:17px; min-height:2.4em;}
+.filiale span{display:block; color:var(--nebentext); font-size:16px;}
+/* Etwas kleiner, damit auch muenchen@<wbr>hautmass.de in eine Spalte passt
+   und nicht mitten im Wort umbricht. */
+.filiale .kontakt{font-size:14px; margin-top:8px; line-height:1.5;}
+
+/* ---------- Kundenstimmen als Laufband ----------
+   Das Band läuft von rechts nach links. Es hält an, wenn man mit der Maus
+   darüber geht, und über den Knopf kann man es dauerhaft anhalten.
+   Wer im Betriebssystem weniger Bewegung eingestellt hat, sieht die
+   Stimmen ruhig nebeneinander statt in Bewegung. */
+.laufband-huelle{margin-top:24px;}
+.pause-schalter{position:absolute; width:1px; height:1px; opacity:0;}
+.laufband-kopf{
+  display:flex; align-items:baseline; justify-content:space-between;
+  gap:24px; flex-wrap:wrap;
+}
+.pause-knopf{
+  cursor:pointer; font-size:14px; color:var(--nebentext);
+  border:1px solid var(--linie); border-radius:4px; padding:8px 16px;
+  background:#fff; white-space:nowrap;
+}
+.pause-knopf:hover{color:var(--text); border-color:var(--nebentext);}
+.pause-knopf::after{content:"Pause";}
+.pause-schalter:checked ~ .laufband-kopf .pause-knopf::after{content:"Weiter";}
+.pause-schalter:focus-visible ~ .laufband-kopf .pause-knopf{
+  outline:2px solid var(--akzent-dunkel); outline-offset:2px;
+}
+
+/* Die Ränder werden weich ausgeblendet, damit die angeschnittenen Karten
+   links und rechts nicht abgehackt wirken. */
+.laufband{
+  overflow:hidden; margin-top:16px;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 40px,#000 calc(100% - 40px),transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 40px,#000 calc(100% - 40px),transparent);
+}
+.spur{display:flex; gap:32px; width:max-content; animation:laufen 80s linear infinite;}
+/* Die Liste steht zweimal in der Spur. Verschoben wird um eine Liste plus
+   einen Abstand — das ist die halbe Spur plus die Hälfte einer Lücke. */
+@keyframes laufen{
+  from{transform:translateX(0);}
+  to{transform:translateX(calc(-50% - 16px));}
+}
+.laufband:hover .spur{animation-play-state:paused;}
+.pause-schalter:checked ~ .laufband .spur{animation-play-state:paused;}
+
+.stimme{
+  flex:0 0 320px; width:320px;
+  border-top:2px solid var(--linie); padding-top:16px;
+}
+.stimme blockquote{margin:0 0 16px; font-size:17px; line-height:1.5;}
+.stimme cite{font-style:normal; font-size:15px; color:var(--nebentext);}
+
+@media (prefers-reduced-motion: reduce){
+  .spur{animation:none; flex-wrap:wrap; width:auto;}
+  .kopie{display:none;}
+  .pause-knopf{display:none;}
+}
+
+/* ---------- Preis im Abschluss ---------- */
+.preis{font-size:26px; font-weight:600; color:#fff; margin:0 0 8px;}
+.preis-info{font-size:16px; color:#D8E0E8; margin:0 0 32px; max-width:var(--spalte);}
+
+/* ---------- Abo verwalten: Text, kein zweiter Knopf ---------- */
+.abo-verwalten{
+  margin-top:40px; padding-top:24px; border-top:1px solid #2A4058;
+  max-width:var(--spalte);
+}
+.abo-verwalten h3{color:#fff;}
+.abo-verwalten p{color:#D8E0E8; margin-bottom:0;}
+
+/* ---------- Fußzeile ---------- */
+.fuss{background:var(--tiefblau-dunkel); color:#C6CFD8; padding:48px 0 40px; font-size:15px;}
+.fuss img{width:128px; height:auto; margin-bottom:16px;}
+.fuss p{margin-bottom:8px;}
+.fuss a{color:#C6CFD8; text-underline-offset:3px;}
+.fuss-seiten span{color:#9AA8B4;}
+.fuss-hinweis{margin-top:24px; padding-top:16px; border-top:1px solid #294057; max-width:var(--spalte);}
+
+/* ---------- Handy: 16 Pixel Seitenrand ---------- */
+@media (max-width:720px){
+  .bereich, .kopf, .bildband{padding-left:16px; padding-right:16px;}
+  .abschnitt{padding:40px 0;}
+  .hero{padding:40px 0;}
+  h1{font-size:30px;}
+  h2{font-size:22px;}
+  .hero-kern{font-size:19px;}
+  .schritte{grid-template-columns:1fr; gap:32px;}
+  .filialen{grid-template-columns:1fr; gap:24px;}
+  .stimme{flex-basis:280px; width:280px;}
+  .etikett-block{grid-template-columns:1fr; gap:24px;}
+  .kopf nav{gap:16px;}
+}
+</style>
+
+<style>
+/* ---------- Nur auf dieser Seite: die Fragenliste ---------- */
+.seitenkopf{padding:64px 0 32px;}
+.seitenkopf h1{font-size:38px; margin-bottom:16px;}
+.fragen-liste{border-top:1px solid var(--linie); margin-top:32px;}
+.frage{border-bottom:1px solid var(--linie);}
+.frage summary{
+  cursor:pointer; font-weight:600; font-size:19px; line-height:1.4;
+  padding:16px 0; list-style:none;
+  display:flex; justify-content:space-between; align-items:flex-start; gap:24px;
+}
+.frage summary::-webkit-details-marker{display:none;}
+.frage summary::after{content:"+"; color:var(--akzent-dunkel); font-weight:600; font-size:22px; line-height:1.2;}
+.frage[open] summary::after{content:"\2013";}
+.frage summary:focus-visible{outline:2px solid var(--akzent-dunkel); outline-offset:4px;}
+.antwort{max-width:var(--spalte); padding:0 0 24px;}
+.antwort p{margin:0 0 16px; font-size:17px;}
+.antwort p:last-child{margin-bottom:0;}
+.zurueck{
+  display:inline-block; margin-top:40px; color:var(--akzent-dunkel);
+  font-weight:600; text-underline-offset:4px;
+}
+.zurueck::before{content:"\2190\00a0";}
+@media (max-width:720px){
+  .seitenkopf{padding:32px 0 24px;}
+  .seitenkopf h1{font-size:28px;}
+  .frage summary{font-size:17px;}
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="oben"></div>
+
+<!-- ======== Kopfzeile ======== -->
+<div class="kopf-leiste">
+<header class="kopf">
+  <!-- Auf der Unterseite führt das Logo zurück zur Startseite. -->
+  <a class="logo-link" href="index.html" title="Zur Startseite" aria-label="Zur Startseite">
+    <img src="logo.png" alt="Hautmaß" width="600" height="196">
+  </a>
+  <nav>
+    <a href="index.html">Startseite</a>
+    <a href="index.html#flasche">Wirkstoffe</a>
+    <a href="index.html#filialen">Filialen</a>
+    <a class="knopf-kopf" href="index.html#filialen">Termin buchen</a>
+  </nav>
+</header>
+</div>
+
+<!-- ======== Überschrift und Einleitung ======== -->
+<section class="seitenkopf">
+  <div class="bereich">
+    <h1>Häufige Fragen</h1>
+    <p class="text" style="margin-bottom:0;">Wie deine Hautanalyse abläuft, was in deinem Serum
+       steckt und wie das Abo funktioniert — hier stehen die Antworten.</p>
+  </div>
+</section>
+
+<!-- ======== Die Fragen ======== -->
+<section class="abschnitt" style="padding-top:0;">
+  <div class="bereich">
+    <div class="fragen-liste">
+      <details class="frage">
+        <summary>Was ist Hautmaß?</summary>
+      <div class="antwort">
+        <p>Hautmaß ist ein Gesichtsserum, das für dich gemischt wird, nachdem deine Haut gemessen wurde.</p>
+        <p>In einer unserer Filialen messen wir deine Haut, wählen daraus die passenden Wirkstoffe und ihre Konzentrationen und mischen dein Serum in unserem eigenen Labor. Danach kommt es regelmäßig zu dir nach Hause.</p>
+      </div>
+      </details>
+
+      <details class="frage">
+        <summary>Wie läuft die Hautanalyse ab?</summary>
+      <div class="antwort">
+        <p>Wir messen Feuchtigkeit und Talgproduktion an mehreren Stellen in deinem Gesicht. Dazu sprechen wir mit dir über die Empfindlichkeit deiner Haut.</p>
+        <p>Der Termin dauert rund 15 Minuten, ist kostenlos und einmalig. Deine Werte besprechen wir direkt vor Ort mit dir — aus ihnen entsteht anschließend die Wirkstoffauswahl.</p>
+      </div>
+      </details>
+
+      <details class="frage">
+        <summary>Muss ich ein Foto von meinem Gesicht hochladen?</summary>
+      <div class="antwort">
+        <p>Nein. Für die Hautanalyse brauchst du kein Foto.</p>
+        <p>Gemessen wird persönlich in einer unserer Filialen. Unser Fachpersonal nimmt deine Werte vor Ort auf und fragt dich nach der Empfindlichkeit deiner Haut.</p>
+      </div>
+      </details>
+
+      <details class="frage">
+        <summary>Woher weiß ich, welche Wirkstoffe in meinem Serum sind?</summary>
+      <div class="antwort">
+        <p>Auf deiner Flasche steht jeder ausgewählte Wirkstoff mit seiner Konzentration, dazu das Mischdatum.</p>
+        <p>Die vollständige Inhaltsstoffliste findest du auf dem Rücketikett. Dort stehen auch die Bestandteile der Serumgrundlage.</p>
+      </div>
+      </details>
+
+      <details class="frage">
+        <summary>Wie wende ich mein Serum an?</summary>
+      <div class="antwort">
+        <p>Abends auf die gereinigte Haut, drei bis vier Tropfen, danach deine gewohnte Creme. Morgens geht es genauso.</p>
+        <p>Auf der Flasche steht das Mischdatum. Weil wir frisch für dich mischen, solltest du dein Serum innerhalb von sechs Monaten aufbrauchen.</p>
+      </div>
+      </details>
+
+      <details class="frage">
+        <summary>Wann merke ich einen Unterschied?</summary>
+      <div class="antwort">
+        <p>Das lässt sich nicht für jede Haut gleich beantworten, und wir versprechen kein Ergebnis zu einem bestimmten Zeitpunkt.</p>
+        <p>Die meisten Wirkstoffe brauchen Zeit, weil sich die Haut langsam erneuert. Rechne eher in Wochen als in Tagen. Ein Sofort-Effekt ist ein Gesichtsserum nicht.</p>
+      </div>
+      </details>
+
+      <details class="frage">
+        <summary>Was kostet Hautmaß?</summary>
+      <div class="antwort">
+        <p>39 Euro für eine 30-ml-Flasche im Abo.</p>
+        <p>Die Hautanalyse kostet nichts, die jährliche Nachmessung ebenfalls nicht. Beides ist im Preis enthalten.</p>
+      </div>
+      </details>
+
+      <details class="frage">
+        <summary>Kann ich mein Abo pausieren oder kündigen?</summary>
+      <div class="antwort">
+        <p>Ja, beides im Kundenkonto. Dein Abo ist monatlich kündbar, die Lieferung lässt sich für ein bis drei Monate pausieren.</p>
+        <p>Dafür musst du weder anrufen noch eine E-Mail schreiben und auch keinen Grund angeben.</p>
+      </div>
+      </details>
+
+      <details class="frage">
+        <summary>Was passiert, wenn sich meine Haut verändert?</summary>
+      <div class="antwort">
+        <p>Einmal im Jahr messen wir kostenlos nach.</p>
+        <p>Wir vergleichen deine aktuellen Werte mit den bisherigen. Haben sie sich verschoben, passen wir die Wirkstoffauswahl und ihre Konzentrationen an.</p>
+      </div>
+      </details>
+
+      <details class="frage">
+        <summary>Ist Hautmaß für Menschen mit Hauterkrankungen geeignet?</summary>
+      <div class="antwort">
+        <p>Hautmaß ist kosmetische Pflege und keine medizinische Behandlung.</p>
+        <p>Unsere Analyse misst kosmetische Hautmerkmale. Wir stellen keine Diagnosen und behandeln keine Hauterkrankungen. Bei behandlungsbedürftigen Hautproblemen, etwa Akne oder Neurodermitis, ist eine dermatologische Untersuchung erforderlich.</p>
+      </div>
+      </details>
+    </div>
+
+    <a class="zurueck" href="index.html">Zurück zur Startseite</a>
+  </div>
+</section>
+
+<!-- ======== Fußzeile ======== -->
+<footer class="fuss">
+  <div class="bereich">
+    <img src="logo-weiss.png" alt="Hautmaß" width="600" height="196">
+    <address style="font-style:normal;">Hautmaß GmbH · Traubenkernweg 4 · 10999 Berlin</address>
+    <p class="fuss-seiten">Impressum · Datenschutz · AGB
+      <span>— Diese Seiten werden noch erstellt.</span></p>
+    <div class="fuss-hinweis">
+      Beispielseite aus dem Kurs<br>
+      Alle Angaben, Firmen und Adressen auf dieser Seite sind erfunden.
+      Das Produktbild wurde mit KI erstellt.<br>
+      Kursprojekt von Natascha Rampp ·
+      <a href="mailto:rampp.natascha@outlook.de">rampp.natascha@outlook.de</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

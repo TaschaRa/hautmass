@@ -7,7 +7,7 @@
      Dunkelmodus die Farben automatisch umkehren. -->
 <meta name="color-scheme" content="light">
 <title>Hautmaß — Erst messen, dann mischen</title>
-<meta name="description" content="Hautmaß ist ein individuell gemischtes Gesichtsserum. Die Rezeptur entsteht aus einer Messung in der Filiale. Jeder Wirkstoff steht mit Prozentangabe auf der Flasche.">
+<meta name="description" content="Hautmaß ist ein individuell gemischtes Gesichtsserum. Die Wirkstoffauswahl folgt einer Hautanalyse in der Filiale. Jeder Wirkstoff steht mit seiner Konzentration auf der Flasche.">
 
 <!-- Schrift: Jost von Google Fonts. Fällt die Verbindung aus, greift die Ersatzliste in --schrift. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,6 +37,12 @@
 }
 
 *{box-sizing:border-box;}
+
+/* Sprünge innerhalb der Seite laufen weich, damit man sieht, wohin man springt.
+   Wer im Betriebssystem weniger Bewegung eingestellt hat, bekommt den harten Sprung. */
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+
 body{
   margin:0;
   font-family:var(--schrift);
@@ -86,25 +92,21 @@ h3{font-size:19px; font-weight:600; margin:0 0 8px;}
 .kopf nav a:hover{color:var(--akzent-dunkel);}
 
 /* Hauptknopf oben rechts: 48 Pixel hoch, mit einem Verb beschriftet,
-   dunkler Akzent auf hellem Grund (5:1 Kontrast) */
-.knopf-kopf{
+   weiße Schrift auf dunklem Akzent (5:1 Kontrast).
+   Der Selektor nennt .kopf nav mit, sonst gewinnt die Regel für die
+   normalen Navigationslinks und der Knopf bekommt dunkle Schrift. */
+.kopf nav a.knopf-kopf{
   background:var(--akzent-dunkel); color:#fff;
   text-decoration:none; font-weight:600; font-size:16px;
   padding:12px 24px; border-radius:4px;
 }
-.knopf-kopf:hover{background:#0A6B62;}
+.kopf nav a.knopf-kopf:hover{background:#0A6B62; color:#fff;}
 
-/* ---------- Hero: Name, Kernbotschaft, ein Satz. Mehr nicht. ---------- */
+/* ---------- Hero: Claim, Kernbotschaft, eine Zeile Fakten. Mehr nicht. ---------- */
 .hero{background:var(--tiefblau); color:#fff; padding:64px 0;}
-.hero p{color:#D8E0E8; margin-bottom:24px;}
-
-/* Weiterleser-Link weiß und unterstrichen, damit die Akzentfarbe
-   allein dem Knopf gehört */
-.weiter{
-  display:inline-block; color:#fff; font-weight:600;
-  text-decoration:underline; text-underline-offset:4px;
-}
-.weiter::after{content:" \2193";}
+.hero-kern{font-size:22px; line-height:1.5; color:#fff; margin:0 0 16px; max-width:var(--spalte);}
+.hero-fakten{font-size:18px; color:#D8E0E8; margin:0; max-width:var(--spalte);}
+.hero-fakten strong{color:#fff; font-weight:600;}
 
 /* ---------- Hauptknopf auf dunklem Grund ---------- */
 .knopf{
@@ -118,7 +120,8 @@ h3{font-size:19px; font-weight:600; margin:0 0 8px;}
 /* ---------- Bild ---------- */
 .bildband{padding:0 24px;}
 .bildband img{width:100%; height:auto; max-width:952px; margin:0 auto;}
-.bildquelle{font-size:13px; color:var(--nebentext); margin:8px 0 0;}
+.bildunter{font-size:16px; margin:16px 0 0; max-width:var(--spalte);}
+.bildquelle{font-size:15px; color:var(--nebentext); margin:8px 0 0; max-width:var(--spalte);}
 
 /* ---------- Skalenstriche, greifen das Logo auf ---------- */
 .striche{display:flex; align-items:flex-end; gap:4px; height:24px; margin-bottom:16px;}
@@ -141,7 +144,12 @@ h3{font-size:19px; font-weight:600; margin:0 0 8px;}
   background:#fff; border:1px solid var(--linie); border-radius:8px;
   padding:24px;
 }
-.etikett-logo{width:136px; height:auto; margin-bottom:16px;}
+.etikett-logo{width:136px; height:auto; margin-bottom:8px;}
+.etikett-claim{font-size:13px; color:var(--nebentext); margin:0 0 16px;}
+.etikett-produkt{
+  font-size:15px; color:var(--text); margin:0 0 16px;
+  padding-bottom:16px; border-bottom:1px solid var(--linie);
+}
 .etikett-analyse{
   font-size:14px; color:var(--nebentext); line-height:1.5;
   border-bottom:1px solid var(--linie); padding-bottom:16px;
@@ -162,39 +170,96 @@ h3{font-size:19px; font-weight:600; margin:0 0 8px;}
 .details dt{font-weight:600; font-size:16px; margin-top:16px;}
 .details dd{margin:0; font-size:16px; color:var(--nebentext);}
 .etikett-grundlage{
-  font-size:13px; color:var(--nebentext); line-height:1.5; margin-top:16px;
+  font-size:14px; color:var(--nebentext); line-height:1.5; margin-top:16px;
 }
-.etikett-datum{font-size:13px; color:var(--nebentext); margin-top:8px;}
+.etikett-datum{font-size:14px; color:var(--nebentext); margin-top:8px;}
 
 .grenze{border-left:3px solid var(--akzent-dunkel); padding-left:24px; max-width:var(--spalte);}
+.grenze p{margin-bottom:24px;}
+.grenze p:last-child{margin-bottom:0;}
 
 /* ---------- Filialen ---------- */
-.filialen{display:grid; grid-template-columns:repeat(5,1fr); gap:24px;}
+.filialen-titel{margin:40px 0 16px;}
+.filialen{display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:16px 16px;}
 .filiale{border-top:2px solid var(--linie); padding-top:8px;}
 .filiale strong{display:block; font-size:17px; min-height:2.4em;}
-.filiale span{color:var(--nebentext); font-size:16px;}
+.filiale span{display:block; color:var(--nebentext); font-size:16px;}
+/* Etwas kleiner, damit auch muenchen@<wbr>hautmass.de in eine Spalte passt
+   und nicht mitten im Wort umbricht. */
+.filiale .kontakt{font-size:14px; margin-top:8px; line-height:1.5;}
 
-/* ---------- Kundenstimmen ---------- */
-.stimmen{display:grid; grid-template-columns:repeat(3,1fr); gap:32px;}
-.stimme{border-top:2px solid var(--linie); padding-top:16px;}
+/* ---------- Kundenstimmen als Laufband ----------
+   Das Band läuft von rechts nach links. Es hält an, wenn man mit der Maus
+   darüber geht, und über den Knopf kann man es dauerhaft anhalten.
+   Wer im Betriebssystem weniger Bewegung eingestellt hat, sieht die
+   Stimmen ruhig nebeneinander statt in Bewegung. */
+.laufband-huelle{margin-top:24px;}
+.pause-schalter{position:absolute; width:1px; height:1px; opacity:0;}
+.laufband-kopf{
+  display:flex; align-items:baseline; justify-content:space-between;
+  gap:24px; flex-wrap:wrap;
+}
+.pause-knopf{
+  cursor:pointer; font-size:14px; color:var(--nebentext);
+  border:1px solid var(--linie); border-radius:4px; padding:8px 16px;
+  background:#fff; white-space:nowrap;
+}
+.pause-knopf:hover{color:var(--text); border-color:var(--nebentext);}
+.pause-knopf::after{content:"Pause";}
+.pause-schalter:checked ~ .laufband-kopf .pause-knopf::after{content:"Weiter";}
+.pause-schalter:focus-visible ~ .laufband-kopf .pause-knopf{
+  outline:2px solid var(--akzent-dunkel); outline-offset:2px;
+}
+
+/* Die Ränder werden weich ausgeblendet, damit die angeschnittenen Karten
+   links und rechts nicht abgehackt wirken. */
+.laufband{
+  overflow:hidden; margin-top:16px;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 40px,#000 calc(100% - 40px),transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 40px,#000 calc(100% - 40px),transparent);
+}
+.spur{display:flex; gap:32px; width:max-content; animation:laufen 80s linear infinite;}
+/* Die Liste steht zweimal in der Spur. Verschoben wird um eine Liste plus
+   einen Abstand — das ist die halbe Spur plus die Hälfte einer Lücke. */
+@keyframes laufen{
+  from{transform:translateX(0);}
+  to{transform:translateX(calc(-50% - 16px));}
+}
+.laufband:hover .spur{animation-play-state:paused;}
+.pause-schalter:checked ~ .laufband .spur{animation-play-state:paused;}
+
+.stimme{
+  flex:0 0 320px; width:320px;
+  border-top:2px solid var(--linie); padding-top:16px;
+}
 .stimme blockquote{margin:0 0 16px; font-size:17px; line-height:1.5;}
 .stimme cite{font-style:normal; font-size:15px; color:var(--nebentext);}
 
-/* ---------- Abo verwalten: Textlink, kein zweiter Knopf ---------- */
+@media (prefers-reduced-motion: reduce){
+  .spur{animation:none; flex-wrap:wrap; width:auto;}
+  .kopie{display:none;}
+  .pause-knopf{display:none;}
+}
+
+/* ---------- Preis im Abschluss ---------- */
+.preis{font-size:26px; font-weight:600; color:#fff; margin:0 0 8px;}
+.preis-info{font-size:16px; color:#D8E0E8; margin:0 0 32px; max-width:var(--spalte);}
+
+/* ---------- Abo verwalten: Text, kein zweiter Knopf ---------- */
 .abo-verwalten{
   margin-top:40px; padding-top:24px; border-top:1px solid #2A4058;
   max-width:var(--spalte);
 }
 .abo-verwalten h3{color:#fff;}
-.abo-verwalten p{color:#D8E0E8; margin-bottom:16px;}
-.abo-verwalten a{color:#fff; text-decoration:underline; text-underline-offset:4px;}
+.abo-verwalten p{color:#D8E0E8; margin-bottom:0;}
 
 /* ---------- Fußzeile ---------- */
 .fuss{background:var(--tiefblau-dunkel); color:#C6CFD8; padding:48px 0 40px; font-size:15px;}
 .fuss img{width:128px; height:auto; margin-bottom:16px;}
 .fuss p{margin-bottom:8px;}
-.fuss a{color:#C6CFD8;}
-.fuss-hinweis{margin-top:24px; padding-top:16px; border-top:1px solid #294057;}
+.fuss a{color:#C6CFD8; text-underline-offset:3px;}
+.fuss-seiten span{color:#9AA8B4;}
+.fuss-hinweis{margin-top:24px; padding-top:16px; border-top:1px solid #294057; max-width:var(--spalte);}
 
 /* ---------- Handy: 16 Pixel Seitenrand ---------- */
 @media (max-width:720px){
@@ -203,9 +268,10 @@ h3{font-size:19px; font-weight:600; margin:0 0 8px;}
   .hero{padding:40px 0;}
   h1{font-size:30px;}
   h2{font-size:22px;}
+  .hero-kern{font-size:19px;}
   .schritte{grid-template-columns:1fr; gap:32px;}
   .filialen{grid-template-columns:1fr; gap:24px;}
-  .stimmen{grid-template-columns:1fr; gap:32px;}
+  .stimme{flex-basis:280px; width:280px;}
   .etikett-block{grid-template-columns:1fr; gap:24px;}
   .kopf nav{gap:16px;}
 }
@@ -214,49 +280,58 @@ h3{font-size:19px; font-weight:600; margin:0 0 8px;}
 
 <body>
 
-<!-- ======== Kopfzeile ======== -->
+<!-- ======== 1 Kopfzeile ======== -->
+<!-- Sprungmarke für den Seitenanfang. Sie steht vor der Kopfzeile, weil die
+     Kopfzeile am Bildschirm oben klebt und deshalb selbst kein Ziel sein kann. -->
+<div id="oben"></div>
+
 <div class="kopf-leiste">
-<header class="kopf" id="oben">
-  <a class="logo-link" href="#oben" aria-label="Zum Seitenanfang">
-    <img src="logo.png" alt="Hautmaß">
+<header class="kopf">
+  <!-- Das Logo ist ein Link auf den Seitenanfang. -->
+  <a class="logo-link" href="#oben" title="Zum Seitenanfang" aria-label="Zum Seitenanfang">
+    <img src="logo.png" alt="Hautmaß" width="600" height="196">
   </a>
   <nav>
     <a href="#ablauf">Messen und mischen</a>
     <a href="#flasche">Wirkstoffe</a>
     <a href="#filialen">Filialen</a>
+    <a href="fragen.html">Häufige Fragen</a>
     <a class="knopf-kopf" href="#filialen">Termin buchen</a>
   </nav>
 </header>
 </div>
 
-<!-- ======== Hero ======== -->
+<!-- ======== 2 Startbereich ======== -->
 <section class="hero">
   <div class="bereich">
     <h1>Erst messen, dann mischen.</h1>
-    <p class="text">Hautmaß ist ein individuell gemischtes Gesichtsserum für Menschen,
-       die nach mehreren erfolglosen Cremes wissen wollen, was ihre Haut
-       <strong>tatsächlich</strong> braucht.</p>
-    <a class="weiter" href="#ablauf">So läuft es ab</a>
+    <p class="hero-kern">Mit Hautmaß kaufst du deine Pflege nicht mehr auf Verdacht.</p>
+    <p class="hero-fakten">Individuell gemischtes Gesichtsserum ·
+       <strong>39 Euro für 30 ml</strong></p>
   </div>
 </section>
 
-<!-- ======== Das Problem ======== -->
+<!-- ======== 3 Das Problem ======== -->
 <section class="abschnitt abschnitt-hell">
   <div class="bereich">
-    <p class="text" style="font-size:22px; line-height:1.5;">
+    <p class="text" style="font-size:22px; line-height:1.5; margin-bottom:24px;">
       Das halbe Badregal steht voll mit angebrochenen Tiegeln, und keiner hat gepasst.
       Das Problem ist selten die Haut. Das Problem ist das Raten.
     </p>
+    <p class="text" style="margin-bottom:0;">Wir messen erst und mischen dann.</p>
   </div>
 </section>
 
-<!-- ======== Bild ======== -->
+<!-- ======== 4 Produktbild ======== -->
 <div class="bildband">
-  <img src="flasche.jpg" alt="Dunkelblaue Serumflasche mit Etikett vor heller Wand">
-  <div class="bereich"><p class="bildquelle">Produktbild mit KI erstellt</p></div>
+  <img src="flasche.jpg" alt="Dunkelblaue Serumflasche mit Etikett vor heller Wand" width="1500" height="1000">
+  <div class="bereich">
+    <p class="bildunter">Hautmaß – dein Gesichtsserum, gemischt nach deinen Messwerten.</p>
+    <p class="bildquelle">Produktbild mit KI erstellt.</p>
+  </div>
 </div>
 
-<!-- ======== Drei Schritte ======== -->
+<!-- ======== 5 Messen, mischen, nach Hause ======== -->
 <section class="abschnitt" id="ablauf">
   <div class="bereich">
     <h2>Messen, mischen, nach Hause</h2>
@@ -264,37 +339,42 @@ h3{font-size:19px; font-weight:600; margin:0 0 8px;}
       <div>
         <div class="striche"><span></span><span></span><span></span><span></span></div>
         <h3>Messen</h3>
-        <p>In einer Hautmaß-Filiale misst unser Fachpersonal an mehreren Stellen im Gesicht
-           Feuchtigkeit und Talgproduktion, dazu kommen Fragen zur Empfindlichkeit.
-           <strong>15 Minuten</strong>, einmalig, kostenlos.</p>
+        <p>In einer Hautmaß-Filiale messen wir Feuchtigkeit und Talgproduktion an mehreren
+           Stellen in deinem Gesicht. Zusätzlich fragen wir nach der Empfindlichkeit deiner
+           Haut. Die Hautanalyse dauert rund <strong>15 Minuten</strong> und ist kostenlos.</p>
       </div>
       <div>
         <div class="striche"><span></span><span></span><span></span><span></span></div>
         <h3>Mischen</h3>
-        <p>Aus deinen Werten entsteht die Rezeptur. Gemischt wird in unserem eigenen Labor,
-           nicht in der Filiale.</p>
+        <p>Aus deinen Messwerten wählen wir die passenden Wirkstoffe und ihre Konzentrationen.
+           Gemischt wird dein Serum in unserem eigenen Labor.</p>
       </div>
       <div>
         <div class="striche"><span></span><span></span><span></span><span></span></div>
         <h3>Nach Hause</h3>
-        <p>Dein Serum wird geliefert, monatlich oder alle zwei Monate. Einmal im Jahr
-           messen wir kostenlos nach.</p>
+        <p>Dein Serum kommt regelmäßig zu dir nach Hause. Du kannst zwischen monatlicher
+           Lieferung und einer Lieferung alle zwei Monate wählen. Einmal im Jahr messen wir
+           deine Haut kostenlos nach und passen die Wirkstoffauswahl an, wenn sich die Werte
+           verändert haben.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ======== Wirkstoffe ======== -->
+<!-- ======== 6 Jeder Wirkstoff steht auf der Flasche ======== -->
 <section class="abschnitt abschnitt-hell" id="flasche">
   <div class="bereich">
     <h2>Jeder Wirkstoff steht auf der Flasche</h2>
-    <p class="text">Mit Prozentangabe und Mischdatum. Das sind die Wirkstoffe, die aus deiner
-       Hautanalyse ausgewählt wurden. So sieht das bei trockener Haut mit hoher
-       Talgproduktion aus:</p>
+    <p class="text">Du siehst, welche Wirkstoffe dein Serum enthält und in welcher Konzentration
+       sie eingesetzt werden. Die Auswahl folgt deiner Hautanalyse. Auch das Mischdatum steht
+       auf deiner Flasche. So kann eine beispielhafte Wirkstoffauswahl bei wenig Feuchtigkeit
+       und hoher Talgproduktion aussehen.</p>
 
     <div class="etikett-block">
       <div class="etikett">
-        <img class="etikett-logo" src="logo.png" alt="Hautmaß">
+        <img class="etikett-logo" src="logo.png" alt="Hautmaß" width="600" height="196">
+        <p class="etikett-claim">Erst messen, dann mischen.</p>
+        <p class="etikett-produkt">Individuelles Gesichtsserum</p>
 
         <div class="etikett-analyse">
           <strong>Hautanalyse</strong>
@@ -309,20 +389,20 @@ h3{font-size:19px; font-weight:600; margin:0 0 8px;}
         <div class="etikett-zeile"><span>Hyaluronsäure</span><span class="wert">0,2 %</span></div>
 
         <div class="etikett-grundlage">
-          Dazu die Serumgrundlage: Wasser, Feuchthaltemittel, Verdickungsmittel
-          und Konservierung. Die vollständige Inhaltsstoffliste steht auf dem Rücketikett.
+          Dazu die Serumgrundlage aus Wasser, Feuchthaltemitteln, Verdickungsmitteln und
+          Konservierungsstoffen. Die vollständige Inhaltsstoffliste steht auf dem Rücketikett.
         </div>
         <div class="etikett-datum">Gemischt am 22.09.2026 · 30 ml</div>
       </div>
 
       <div>
-        <h3>Warum diese Wirkstoffe</h3>
-        <p>Die Auswahl folgt drei Werten: Feuchtigkeit, Talgproduktion und Empfindlichkeit.
-           Fehlt Feuchtigkeit, kommen Feuchthaltemittel wie Glycerin und Hyaluronsäure dazu.
-           Bei hoher Talgproduktion bekommt Niacinamid mehr Gewicht, und die Lipide werden
-           leicht gewählt statt reichhaltig — weggelassen werden sie nicht, denn auch fettige
-           Haut braucht pflegende Lipide. Ist die Haut empfindlich, überwiegen beruhigende
-           Stoffe wie Panthenol und Allantoin.</p>
+        <h3>Warum diese Wirkstoffe?</h3>
+        <p>Die Auswahl folgt deiner Hautanalyse: Feuchtigkeit, Talgproduktion und
+           Empfindlichkeit. Fehlt deiner Haut Feuchtigkeit, können Glycerin und Hyaluronsäure
+           helfen, sie zu binden. Bei hoher Talgproduktion wählen wir die Lipide leicht statt
+           reichhaltig. Weggelassen werden sie nicht — auch fettige Haut braucht pflegende
+           Lipide. Ist deine Haut empfindlich, überwiegen beruhigende Wirkstoffe wie Panthenol.
+           So entsteht deine Zusammenstellung aus deinen Messwerten.</p>
 
         <details class="details">
           <summary>Was die einzelnen Wirkstoffe tun</summary>
@@ -330,17 +410,17 @@ h3{font-size:19px; font-weight:600; margin:0 0 8px;}
             <dt>Niacinamid</dt>
             <dd>Unterstützt die Hautbarriere und kann glänzende Partien ausgleichen.</dd>
             <dt>Glycerin</dt>
-            <dd>Hält Feuchtigkeit in der Haut.</dd>
+            <dd>Hilft, Feuchtigkeit in der Haut zu halten.</dd>
             <dt>Panthenol</dt>
             <dd>Beruhigt und unterstützt die Hautbarriere.</dd>
             <dt>Squalan</dt>
-            <dd>Leichtes Lipid, das sich nicht schwer auf die Haut legt.</dd>
+            <dd>Ein leichtes, pflegendes Lipid, das sich angenehm auf der Haut verteilen lässt.</dd>
             <dt>Hyaluronsäure</dt>
             <dd>Bindet Feuchtigkeit in der obersten Hautschicht.</dd>
           </dl>
         </details>
 
-        <p class="klein">Jede Zusammenstellung sieht anders aus. Die Angaben in der Karte sind
+        <p class="klein">Jede Zusammensetzung sieht anders aus. Die Angaben in der Karte sind
            eine beispielhafte Wirkstoffauswahl für ein erfundenes Produkt, keine geprüfte
            Herstellungsrezeptur.</p>
       </div>
@@ -348,87 +428,171 @@ h3{font-size:19px; font-weight:600; margin:0 0 8px;}
   </div>
 </section>
 
-<!-- ======== Ehrliche Grenze ======== -->
+<!-- ======== 7 Was wir nicht können ======== -->
 <section class="abschnitt">
   <div class="bereich">
     <div class="grenze">
       <h2>Was wir nicht können</h2>
-      <p>Eine behandlungsbedürftige Hauterkrankung gehört in dermatologische Hände.
-         Dafür ist ein kosmetisches Serum nicht gemacht.</p>
+      <p><strong>Hautmaß ist kosmetische Pflege und keine medizinische Behandlung.</strong></p>
+      <p>Wir messen und beurteilen kosmetische Hautmerkmale. Eine Hauterkrankung können wir
+         damit nicht diagnostizieren oder behandeln. Bei behandlungsbedürftigen Hautproblemen
+         ist eine dermatologische Untersuchung erforderlich.</p>
     </div>
   </div>
 </section>
 
-<!-- ======== Filialen ======== -->
+<!-- ======== 8 Deine Hautanalyse vor Ort ======== -->
 <section class="abschnitt abschnitt-hell" id="filialen">
   <div class="bereich">
-    <h2>Fünf Filialen</h2>
+    <h2>Deine Hautanalyse vor Ort</h2>
+    <p class="text">In unseren Hautmaß-Filialen messen wir die Feuchtigkeit und die
+       Talgproduktion deiner Haut. Dazu sprechen wir mit dir über ihre Empfindlichkeit.
+       Wähle einen Standort in deiner Nähe und vereinbare deinen kostenlosen Termin.</p>
+
+    <h3 class="filialen-titel">Unsere Filialen</h3>
     <div class="filialen">
-      <div class="filiale"><strong>Berlin</strong><span>Traubenkernweg 4</span></div>
-      <div class="filiale"><strong>Hamburg</strong><span>Mühlsandstraße 17</span></div>
-      <div class="filiale"><strong>Köln</strong><span>Feldwaageplatz 2</span></div>
-      <div class="filiale"><strong>Frankfurt am Main</strong><span>Quarzgasse 8</span></div>
-      <div class="filiale"><strong>München</strong><span>Birkenlohstraße 23</span></div>
+      <div class="filiale">
+        <strong>Berlin</strong><span>Traubenkernweg 4</span>
+        <span class="kontakt">030 23125 100<br>berlin@<wbr>hautmass.de</span>
+      </div>
+      <div class="filiale">
+        <strong>Hamburg</strong><span>Mühlsandstraße 17</span>
+        <span class="kontakt">040 66969 100<br>hamburg@<wbr>hautmass.de</span>
+      </div>
+      <div class="filiale">
+        <strong>Köln</strong><span>Feldwaageplatz 2</span>
+        <span class="kontakt">0221 4710 100<br>koeln@<wbr>hautmass.de</span>
+      </div>
+      <div class="filiale">
+        <strong>Frankfurt am Main</strong><span>Quarzgasse 8</span>
+        <span class="kontakt">069 90009 100<br>frankfurt@<wbr>hautmass.de</span>
+      </div>
+      <div class="filiale">
+        <strong>München</strong><span>Birkenlohstraße 23</span>
+        <span class="kontakt">089 99998 100<br>muenchen@<wbr>hautmass.de</span>
+      </div>
     </div>
+    <p class="klein text" style="margin-top:24px;">Filialen, Adressen, Telefonnummern und
+       E-Mail-Adressen sind erfunden. Die Nummern stammen aus dem Bereich, den die
+       Bundesnetzagentur für Film und Fernsehen reserviert hat — dort ist niemand
+       erreichbar.</p>
   </div>
 </section>
 
-<!-- ======== Kundenstimmen ======== -->
+<!-- ======== 9 Kundenbewertungen als Laufband ======== -->
 <section class="abschnitt">
   <div class="bereich">
-    <h2>Erfahrungen aus dem ersten Jahr</h2>
-    <div class="stimmen">
-      <div class="stimme">
-        <blockquote>„Ich habe vorher jedes halbe Jahr etwas Neues gekauft. Jetzt steht auf
-          der Flasche, was drin ist, und ich muss nicht mehr raten."</blockquote>
-        <cite>Anke M., 41, Köln</cite>
+    <h2>So könnte Hautmaß im Alltag ankommen</h2>
+
+    <div class="laufband-huelle">
+      <!-- Kein JavaScript: das Kästchen ist unsichtbar, der Knopf schaltet es um,
+           und das Band hält an, sobald es angehakt ist. -->
+      <input class="pause-schalter" type="checkbox" id="stimmen-pause">
+      <div class="laufband-kopf">
+        <p class="klein text" style="margin-bottom:0;">Fiktive Beispielstimmen für die Kursübung —
+          die Personen und ihre Aussagen sind erfunden.</p>
+        <label class="pause-knopf" for="stimmen-pause" title="Laufband anhalten"></label>
       </div>
-      <div class="stimme">
-        <blockquote>„Der Termin hat tatsächlich nur eine Viertelstunde gedauert. Dass danach
-          nichts mehr zu tun war, hat mich überzeugt."</blockquote>
-        <cite>Tobias R., 34, Hamburg</cite>
-      </div>
-      <div class="stimme">
-        <blockquote>„Ich hatte mit einer schnelleren Wirkung gerechnet. Nach vier Wochen
-          merke ich den Unterschied — ein Sofort-Effekt ist es nicht."</blockquote>
-        <cite>Sandra K., 38, Berlin</cite>
+
+      <div class="laufband">
+        <div class="spur">
+        <div class="stimme">
+          <blockquote><strong>„Ich weiß, was in meinem Serum steckt.</strong> Früher habe ich verschiedene Cremes ausprobiert. Jetzt kann ich nachvollziehen, warum bestimmte Wirkstoffe für meine Haut ausgewählt wurden.“</blockquote>
+          <cite>Anke M. – Beispielstimme</cite>
+        </div>
+        <div class="stimme">
+          <blockquote><strong>„Die Hautanalyse war verständlich.</strong> Mir wurde erklärt, was meine Messwerte bedeuten und wie daraus mein individuelles Serum zusammengestellt wird.“</blockquote>
+          <cite>Tobias R. – Beispielstimme</cite>
+        </div>
+        <div class="stimme">
+          <blockquote><strong>„Ich muss nicht ständig neu auswählen.</strong> Mein Serum kommt regelmäßig nach Hause. Ich weiß, welche Wirkstoffe enthalten sind, und kann mein Abo monatlich kündigen.“</blockquote>
+          <cite>Sandra K. – Beispielstimme</cite>
+        </div>
+        <div class="stimme">
+          <blockquote><strong>„Der Termin hat wirklich nur eine Viertelstunde gedauert.</strong> Ich hatte mit einem langen Beratungsgespräch gerechnet. Gemessen wurde an mehreren Stellen, danach war ich wieder draußen.“</blockquote>
+          <cite>Jens O. – Beispielstimme</cite>
+        </div>
+        <div class="stimme">
+          <blockquote><strong>„Die Prozentangaben haben mich überzeugt.</strong> Auf meinen alten Cremes stand eine lange Liste ohne Mengen. Jetzt sehe ich, wie viel von was enthalten ist.“</blockquote>
+          <cite>Kerstin B. – Beispielstimme</cite>
+        </div>
+        <div class="stimme">
+          <blockquote><strong>„Ein Sofort-Effekt ist es nicht.</strong> Nach vier Wochen merke ich einen Unterschied. Wer nach drei Tagen etwas erwartet, wird enttäuscht sein.“</blockquote>
+          <cite>Daniela P. – Beispielstimme</cite>
+        </div>
+        <div class="stimme">
+          <blockquote><strong>„Das Pausieren hat im Urlaub funktioniert.</strong> Zwei Monate ausgesetzt, danach lief die Lieferung weiter. Anrufen musste ich dafür nicht.“</blockquote>
+          <cite>Markus H. – Beispielstimme</cite>
+        </div>
+        <div class="stimme kopie" aria-hidden="true">
+          <blockquote><strong>„Ich weiß, was in meinem Serum steckt.</strong> Früher habe ich verschiedene Cremes ausprobiert. Jetzt kann ich nachvollziehen, warum bestimmte Wirkstoffe für meine Haut ausgewählt wurden.“</blockquote>
+          <cite>Anke M. – Beispielstimme</cite>
+        </div>
+        <div class="stimme kopie" aria-hidden="true">
+          <blockquote><strong>„Die Hautanalyse war verständlich.</strong> Mir wurde erklärt, was meine Messwerte bedeuten und wie daraus mein individuelles Serum zusammengestellt wird.“</blockquote>
+          <cite>Tobias R. – Beispielstimme</cite>
+        </div>
+        <div class="stimme kopie" aria-hidden="true">
+          <blockquote><strong>„Ich muss nicht ständig neu auswählen.</strong> Mein Serum kommt regelmäßig nach Hause. Ich weiß, welche Wirkstoffe enthalten sind, und kann mein Abo monatlich kündigen.“</blockquote>
+          <cite>Sandra K. – Beispielstimme</cite>
+        </div>
+        <div class="stimme kopie" aria-hidden="true">
+          <blockquote><strong>„Der Termin hat wirklich nur eine Viertelstunde gedauert.</strong> Ich hatte mit einem langen Beratungsgespräch gerechnet. Gemessen wurde an mehreren Stellen, danach war ich wieder draußen.“</blockquote>
+          <cite>Jens O. – Beispielstimme</cite>
+        </div>
+        <div class="stimme kopie" aria-hidden="true">
+          <blockquote><strong>„Die Prozentangaben haben mich überzeugt.</strong> Auf meinen alten Cremes stand eine lange Liste ohne Mengen. Jetzt sehe ich, wie viel von was enthalten ist.“</blockquote>
+          <cite>Kerstin B. – Beispielstimme</cite>
+        </div>
+        <div class="stimme kopie" aria-hidden="true">
+          <blockquote><strong>„Ein Sofort-Effekt ist es nicht.</strong> Nach vier Wochen merke ich einen Unterschied. Wer nach drei Tagen etwas erwartet, wird enttäuscht sein.“</blockquote>
+          <cite>Daniela P. – Beispielstimme</cite>
+        </div>
+        <div class="stimme kopie" aria-hidden="true">
+          <blockquote><strong>„Das Pausieren hat im Urlaub funktioniert.</strong> Zwei Monate ausgesetzt, danach lief die Lieferung weiter. Anrufen musste ich dafür nicht.“</blockquote>
+          <cite>Markus H. – Beispielstimme</cite>
+        </div>
+        </div>
       </div>
     </div>
-    <p class="klein" style="margin-top:32px;">Beispielstimmen für die Kursübung.
-       Die Personen und ihre Aussagen sind erfunden.</p>
+
   </div>
 </section>
 
-<!-- ======== Abschluss mit dem Hauptknopf ======== -->
+<!-- ======== 10 Abschluss mit dem Hauptknopf ======== -->
 <section class="abschnitt abschnitt-dunkel">
   <div class="bereich">
     <h2>Einmal messen, dann hört das Raten auf</h2>
-    <p class="text" style="color:#D8E0E8;">Du kannst weiter Cremes durchprobieren, oder du lässt
-       deine Haut einmal messen. Der Termin dauert rund 15 Minuten und kostet nichts. Danach
-       mischen wir dein Serum aus deinen Werten, und es kommt regelmäßig zu dir nach Hause:
-       <strong>39 Euro für 30 ml</strong>, jederzeit mit einem Klick kündbar.</p>
+    <p class="text" style="color:#D8E0E8; margin-bottom:32px;">Du kannst weiter Cremes
+       durchprobieren, oder du lässt deine Haut einmal messen. Danach mischen wir dein Serum
+       aus deinen Werten, und es kommt regelmäßig zu dir nach Hause.</p>
+    <p class="preis">39 Euro für 30 ml</p>
+    <p class="preis-info">Die Hautanalyse ist kostenlos. Dein Abo ist monatlich kündbar.</p>
     <a class="knopf" href="#filialen">Termin buchen</a>
 
+    <!-- ======== 11 Abo pausieren oder kündigen ======== -->
     <div class="abo-verwalten">
       <h3>Abo pausieren oder kündigen</h3>
-      <p>Beides geht im Kundenkonto mit einem Klick. Pausieren kannst du für einen bis drei
-         Monate, etwa im Urlaub. Kündigen wirkt zum Ende des laufenden Monats. Ohne Anruf,
-         ohne E-Mail, ohne Begründung.</p>
-      <p><a href="#">Zum Kundenkonto</a></p>
+      <p>Du kannst dein Abo im Kundenkonto verwalten. Die Lieferung lässt sich für ein bis
+         drei Monate pausieren. Dein Abo ist monatlich kündbar. Dafür musst du weder anrufen
+         noch eine E-Mail schreiben.</p>
     </div>
   </div>
 </section>
 
-<!-- ======== Fußzeile ======== -->
+<!-- ======== 12 Fußzeile ======== -->
 <footer class="fuss">
   <div class="bereich">
-    <img src="logo-weiss.png" alt="Hautmaß">
+    <img src="logo-weiss.png" alt="Hautmaß" width="600" height="196">
     <address style="font-style:normal;">Hautmaß GmbH · Traubenkernweg 4 · 10999 Berlin</address>
-    <p><a href="#">Impressum</a> · <a href="#">Datenschutz</a> · <a href="#">AGB</a></p>
+    <p class="fuss-seiten">Impressum · Datenschutz · AGB
+      <span>— Diese Seiten werden noch erstellt.</span></p>
     <div class="fuss-hinweis">
       Beispielseite aus dem Kurs<br>
       Alle Angaben, Firmen und Adressen auf dieser Seite sind erfunden.
-      Das Produktbild wurde mit KI erstellt.
+      Das Produktbild wurde mit KI erstellt.<br>
+      Kursprojekt von Natascha Rampp ·
+      <a href="mailto:rampp.natascha@outlook.de">rampp.natascha@outlook.de</a>
     </div>
   </div>
 </footer>
