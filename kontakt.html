@@ -362,18 +362,18 @@ h3{font-size:19px; font-weight:600; margin:0 0 8px;}
 </section>
 
 <!-- ======== Das Formular ========
-     ====================================================================
-     HIER die Webhook-Adresse aus n8n eintragen — sie steht im Webhook-
-     Knoten unter "Production URL" und sieht etwa so aus:
-     https://deinname.app.n8n.cloud/webhook/terminanfrage
-     Solange unten HIER-DEINE-N8N-ADRESSE steht, passiert beim Absenden
-     nichts. Das ist die einzige Stelle, die du ändern musst.
+     Das Ziel unten ist die Production URL des Webhooks in n8n. Dort nimmt
+     der Workflow die Anfrage entgegen, verschickt die Mail und schickt den
+     Besucher weiter auf anfrage.html.
+     Läuft das n8n-Probekonto ab, nimmt das Formular zwar noch Eingaben an,
+     es kommt aber nichts mehr an. Dann besser den Knopf auf der Startseite
+     wieder auf #filialen zeigen lassen.
      ==================================================================== -->
 <section class="abschnitt" style="padding-top:0;">
   <div class="bereich">
 
     <form class="formular" method="post" accept-charset="UTF-8"
-          action="HIER-DEINE-N8N-ADRESSE">
+          action="https://ramppnatascha.app.n8n.cloud/webhook/terminanfrage">
 
       <div class="feld">
         <label for="name">Name <span class="pflicht">*</span></label>
@@ -396,11 +396,11 @@ h3{font-size:19px; font-weight:600; margin:0 0 8px;}
         <label for="filiale">Filiale <span class="pflicht">*</span></label>
         <select id="filiale" name="filiale" required>
           <option value="">Bitte auswählen</option>
-            <option value="berlin">Berlin — Traubenkernweg 4</option>
-            <option value="hamburg">Hamburg — Mühlsandstraße 17</option>
-            <option value="koeln">Köln — Feldwaageplatz 2</option>
-            <option value="frankfurt">Frankfurt am Main — Quarzgasse 8</option>
-            <option value="muenchen">München — Birkenlohstraße 23</option>
+            <option value="Berlin">Berlin — Traubenkernweg 4</option>
+            <option value="Hamburg">Hamburg — Mühlsandstraße 17</option>
+            <option value="Köln">Köln — Feldwaageplatz 2</option>
+            <option value="Frankfurt am Main">Frankfurt am Main — Quarzgasse 8</option>
+            <option value="München">München — Birkenlohstraße 23</option>
         </select>
       </div>
 
@@ -413,7 +413,7 @@ h3{font-size:19px; font-weight:600; margin:0 0 8px;}
         <div class="feld">
           <label for="tageszeit">Tageszeit</label>
           <select id="tageszeit" name="tageszeit">
-            <option value="egal">Ist mir egal</option>
+            <option value="ist mir egal">Ist mir egal</option>
             <option value="vormittags">Vormittags</option>
             <option value="nachmittags">Nachmittags</option>
           </select>
