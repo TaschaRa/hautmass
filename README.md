@@ -63,7 +63,7 @@ sieht die Stimmen ruhig nebeneinander.
 
 `kontakt.html` schickt die Anfrage per POST an einen Webhook bei n8n. Dort prüft ein
 If-Knoten ein unsichtbares Feld gegen automatische Einträge, ein Outlook-Knoten verschickt
-die Anfrage als Mail an das Kurspostfach, und ein Respond-Knoten leitet mit Statuscode 303
+die Anfrage als Mail an das Kurspostfach und ein Respond-Knoten leitet mit Statuscode 303
 auf `anfrage.html` weiter. Der Absender bekommt keine Bestätigungsmail.
 
 **Hinweis:** Das n8n-Probekonto läuft nach 14 Tagen ab. Danach nimmt das Formular zwar noch
