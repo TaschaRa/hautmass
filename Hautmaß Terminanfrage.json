@@ -1,0 +1,147 @@
+{
+  "name": "Hautmaß Terminanfrage",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "terminanfrage",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "59433db3-dac2-429c-814a-d47572aeb7e9",
+      "name": "Webhook",
+      "webhookId": "0f774b05-ff53-4e6f-846c-48d0d015f87e"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "046e0316-fbb1-4d73-8735-5b5bf5ad75ca",
+              "leftValue": "={{ $json.body.firma }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        224,
+        0
+      ],
+      "id": "e17cf572-dc38-4885-a77a-69aff41b3aac",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "toRecipients": "rampp.natascha@outlook.de",
+        "subject": "=Terminanfrage {{ $json.body.filiale }} — {{ $json.body.name }}",
+        "bodyContent": "=Neue Terminanfrage über die Website\n\nName: {{ $json.body.name }}\nE-Mail: {{ $json.body.email }}\nTelefon: {{ $json.body.telefon }}\n\nFiliale: {{ $json.body.filiale }}\nWunschtermin: {{ $json.body.wunschdatum }}, {{ $json.body.tageszeit }}\n\nAnmerkung: {{ $json.body.anmerkung }}",
+        "additionalFields": {
+          "bodyContentType": "Text"
+        }
+      },
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "typeVersion": 2,
+      "position": [
+        448,
+        -96
+      ],
+      "id": "960121e9-632d-4af2-a96b-2003cfdf5b76",
+      "name": "Send a message",
+      "webhookId": "7888c41a-08a7-451d-ac50-afa96f4b6ce9",
+      "credentials": {
+        "microsoftOutlookOAuth2Api": {
+          "id": "OVWvovmhhfGfb92T",
+          "name": "Microsoft Outlook account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "redirect",
+        "redirectURL": "https://taschara.github.io/hautmass/anfrage.html",
+        "options": {
+          "responseCode": 303
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        672,
+        -96
+      ],
+      "id": "1565e4c9-86fc-4a19-9f3e-bc7503d77c53",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "35e322a9-8d5b-478b-8044-bd7f80e89c2a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "22962a84ca50782b332e21d3b45db1c5b3dbbdd9d213a48cda99e67900907358"
+  },
+  "nodeGroups": [],
+  "id": "qBibsgLCi9v2mNtx",
+  "tags": []
+}
