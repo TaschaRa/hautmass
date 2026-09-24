@@ -54,8 +54,10 @@ body{
 }
 img{display:block; max-width:100%;}
 
-/* Absatzabstand 40 Pixel: mehr als das Doppelte der Schriftgröße */
-p{margin:0 0 40px;}
+/* Absatzabstand 40 Pixel: mehr als das Doppelte der Schriftgröße.
+   text-wrap:pretty verhindert, dass ein einzelnes Wort allein in der
+   letzten Zeile steht. Browser, die es nicht kennen, ignorieren es. */
+p{margin:0 0 40px; text-wrap:pretty;}
 p:last-child{margin-bottom:0;}
 
 h1,h2,h3{line-height:1.2; text-wrap:balance;}
@@ -175,6 +177,15 @@ h3{font-size:19px; font-weight:600; margin:0 0 8px;}
 }
 .etikett-datum{font-size:14px; color:var(--nebentext); margin-top:8px;}
 
+
+/* Kurze, tragende Absätze werden auf gleich lange Zeilen verteilt,
+   statt eine volle Zeile und einen Rest zu ergeben. */
+.hero-kern, .bildunter, .klein, .grenze p, .preis-info{text-wrap:balance;}
+
+/* Sätze, die nicht mitten entzweigehen sollen: jeder Satz ist ein
+   eigener Block, der als Ganzes in die nächste Zeile rutscht, wenn er
+   nicht mehr passt. Nur wenn er allein zu breit ist, bricht er um. */
+.saetze span{display:inline-block;}
 .grenze{border-left:3px solid var(--akzent-dunkel); padding-left:24px; max-width:var(--spalte);}
 .grenze p{margin-bottom:24px;}
 .grenze p:last-child{margin-bottom:0;}

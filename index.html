@@ -53,8 +53,10 @@ body{
 }
 img{display:block; max-width:100%;}
 
-/* Absatzabstand 40 Pixel: mehr als das Doppelte der Schriftgröße */
-p{margin:0 0 40px;}
+/* Absatzabstand 40 Pixel: mehr als das Doppelte der Schriftgröße.
+   text-wrap:pretty verhindert, dass ein einzelnes Wort allein in der
+   letzten Zeile steht. Browser, die es nicht kennen, ignorieren es. */
+p{margin:0 0 40px; text-wrap:pretty;}
 p:last-child{margin-bottom:0;}
 
 h1,h2,h3{line-height:1.2; text-wrap:balance;}
@@ -174,6 +176,15 @@ h3{font-size:19px; font-weight:600; margin:0 0 8px;}
 }
 .etikett-datum{font-size:14px; color:var(--nebentext); margin-top:8px;}
 
+
+/* Kurze, tragende Absätze werden auf gleich lange Zeilen verteilt,
+   statt eine volle Zeile und einen Rest zu ergeben. */
+.hero-kern, .bildunter, .klein, .grenze p, .preis-info{text-wrap:balance;}
+
+/* Sätze, die nicht mitten entzweigehen sollen: jeder Satz ist ein
+   eigener Block, der als Ganzes in die nächste Zeile rutscht, wenn er
+   nicht mehr passt. Nur wenn er allein zu breit ist, bricht er um. */
+.saetze span{display:inline-block;}
 .grenze{border-left:3px solid var(--akzent-dunkel); padding-left:24px; max-width:var(--spalte);}
 .grenze p{margin-bottom:24px;}
 .grenze p:last-child{margin-bottom:0;}
@@ -314,9 +325,11 @@ h3{font-size:19px; font-weight:600; margin:0 0 8px;}
 <!-- ======== 3 Das Problem ======== -->
 <section class="abschnitt abschnitt-hell">
   <div class="bereich">
-    <p class="text" style="font-size:22px; line-height:1.5; margin-bottom:24px;">
-      Das halbe Badregal steht voll mit angebrochenen Tiegeln, und keiner hat gepasst.
-      Das Problem ist selten die Haut. Das Problem ist das Raten.
+    <p class="text saetze" style="font-size:22px; line-height:1.5; margin-bottom:24px;">
+      <span>Das halbe Badregal steht voll mit angebrochenen Tiegeln.</span>
+      <span>Nichts davon hat gepasst.</span>
+      <span>Das Problem ist selten die Haut.</span>
+      <span>Das Problem ist das Raten.</span>
     </p>
     <p class="text" style="margin-bottom:0;">Wir messen erst und mischen dann.</p>
   </div>
@@ -453,23 +466,23 @@ h3{font-size:19px; font-weight:600; margin:0 0 8px;}
     <div class="filialen">
       <div class="filiale">
         <strong>Berlin</strong><span>Traubenkernweg 4</span>
-        <span class="kontakt">030 23125 100<br>berlin@<wbr>hautmass.de</span>
+        <span class="kontakt">Tel. 030 23125 100<br>berlin@<wbr>hautmass.de</span>
       </div>
       <div class="filiale">
         <strong>Hamburg</strong><span>Mühlsandstraße 17</span>
-        <span class="kontakt">040 66969 100<br>hamburg@<wbr>hautmass.de</span>
+        <span class="kontakt">Tel. 040 66969 100<br>hamburg@<wbr>hautmass.de</span>
       </div>
       <div class="filiale">
         <strong>Köln</strong><span>Feldwaageplatz 2</span>
-        <span class="kontakt">0221 4710 100<br>koeln@<wbr>hautmass.de</span>
+        <span class="kontakt">Tel. 0221 4710 100<br>koeln@<wbr>hautmass.de</span>
       </div>
       <div class="filiale">
         <strong>Frankfurt am Main</strong><span>Quarzgasse 8</span>
-        <span class="kontakt">069 90009 100<br>frankfurt@<wbr>hautmass.de</span>
+        <span class="kontakt">Tel. 069 90009 100<br>frankfurt@<wbr>hautmass.de</span>
       </div>
       <div class="filiale">
         <strong>München</strong><span>Birkenlohstraße 23</span>
-        <span class="kontakt">089 99998 100<br>muenchen@<wbr>hautmass.de</span>
+        <span class="kontakt">Tel. 089 99998 100<br>muenchen@<wbr>hautmass.de</span>
       </div>
     </div>
     <p class="klein text" style="margin-top:24px;">Filialen, Adressen, Telefonnummern und
